@@ -16,4 +16,4 @@ Programação I - UFPA 2022.
 - [Arthur Rodrigues](https://github.com/Arthurgit13)
 
 ## Sobre o projeto:
-![Projeto 6](https://user-images.githubusercontent.com/80470130/200285228-1ddc7555-8b2d-4cbc-be53-feb1a2f60f86.png)
+<img src="https://user-images.githubusercontent.com/80470130/200285228-1ddc7555-8b2d-4cbc-be53-feb1a2f60f86.png" width=50%;>
