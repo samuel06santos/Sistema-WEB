@@ -1,0 +1,25 @@
+COMMANDS FOR **WINDOWS:
+    
+    Cria um virtual environment chamado 'venv'
+python -m venv venv
+    
+    Acessa o diretório do venv criado, ativa e sai do diretório
+cd venv/Scripts
+activate
+cd ../..
+    
+    Instala o django caso não esteja instalado
+pip install django
+
+    Cria o projeto chamado 'app' sem subdiretorio
+django-admin startproject app .
+
+    Cria o app chamado 'core'
+django-admin startapp core
+
+    Gerencia os migrations
+python manage.py makemigrations
+python manage.py migrate
+
+    Roda o localhost
+python manage.py runserver
