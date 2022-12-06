@@ -2,8 +2,27 @@ from django.shortcuts import render, redirect
 from .models import Usuario
 
 def home(request):
-    users = Usuario.objects.all()
+    search = request.POST.get("search")
+    users = Usuario.objects.filter(user=search)
     return render(request, "home.html", {"usuarios": users})
+
+def search(request):
+    search = request.POST.get("search")
+    users = Usuario.objects.filter(user=search)
+    return render(request, "home.html", {"usuarios": users})
+
+def entrar(request):
+    email = request.POST.get("email")
+    
+    password = request.POST.get("password")
+    print(email, password, sep="\n")
+    return render(request, "login.html")
+
+def registrar(request):
+    email = request.POST.get("email")
+    password = request.POST.get("password")
+    print(f"USUARIO CRIADO:\n{email=}\n{password=}\n\n")
+    return render(request, "register.html")
 
 def salvar(request):
     name = request.POST.get("name")
@@ -17,14 +36,14 @@ def deletar(request, id):
 
 # EM CONSTRUÇÃO
 
-def edit(request, id):
-    user = Usuario.objects.get(id=id)
-    return render(request, "edit.html", {"usuario": user})
+# def edit(request, id):
+#     user = Usuario.objects.get(id=id)
+#     return render(request, "edit.html", {"usuario": user})
 
-def update(request, id):
-    new_name = request.POST.get("name")
-    user = Usuario.objects.get(id=id)
-    user.name = new_name
-    user.save()
-    return redirect(home)
+# def update(request, id):
+#     new_name = request.POST.get("name")
+#     user = Usuario.objects.get(id=id)
+#     user.name = new_name
+#     user.save()
+#     return redirect(home)
 
