@@ -12,24 +12,8 @@
   <title>Home</title>
 </head>
 <body>
-    <form class="formulary" action="{% url 'search' %}" method="POST">
-        {% csrf_token %}
-
-        <div class="form-row">
-            <label for="" class="label-user">Pesquisar:</label>
-            <input type="text" name="search" id="search">
-        </div>
-    </form>
-
-    <nav class="navbar navbar-dark bg-mynav">
-      <div class="container-fluid">
-        <a class="navbar-brand" href="#">My App</a>
-      </div>
-    </nav>
-
     <div class="container">
-      <div class="d-flex bd-highlight mb-3">
-        <div class="me-auto p-2 bd-highlight"><h2>Users</div>
+      <div class="d-flex align-items-center justify-content-between bd-highlight mb-3">
         <div class="p-2 bd-highlight">
           <!-- Button trigger modal -->
             <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#exampleModal">
@@ -60,16 +44,20 @@
             </div>
             </div>
         </div>
+        <form class="input-group w-50" action="{% url 'search' %}" method="POST">
+          {% csrf_token %}
+          <input type="text" class="form-control" placeholder="Username" aria-label="Username" name="search" id="search" aria-describedby="button-addon2">
+          <button class="btn btn-outline-secondary" type="button" id="button-addon2">Pesquisar</button>
+        </form>
       </div>
       
       <div class="table-responsive">
         <table class="table">
           <thead>
             <tr>
-              <th scope="col">#</th>
+              <th scope="col">Id</th>
               <th scope="col">Avatar</th>
-              <th scope="col">First</th>
-              <th scope="col">Last</th>
+              <th scope="col">E-mail</th>
               <th scope="col">Username</th>
               <th scope="col">Action</th>
             </tr>
@@ -81,17 +69,14 @@
                 <th scope="col" colspan="1"><img src="https://avatars.githubusercontent.com/{{user.user}}" alt="Image github profile of {{user.user}}" height="36"></th>
                <!-- Teste p/ pegar nome e sobrenome do GitHub por API -->
                 <th scope="col" colspan="1">-</th>
-                <th scope="col" colspan="1">-</th>
                 <th scope="col" colspan="1">{{ user.user }}</th>
-                <th scope="col" colspan="1" class="d-flex">
+                <th scope="col" colspan="1" >
                     <button class="btn btn-primary px-2" type="submit" name="id" value="{{ user.id }}" >EDIT</button>
-                    <form class="del" action="{% url 'deletar' user.id %}" method="POST">
+                    <form class="del d-inline" action="{% url 'deletar' user.id %}" method="POST">
                         {% csrf_token %}
-        
                         <button class="btn btn-danger ml-1" type="submit" name="id" value="{{ user.id }}" >DEL</button>
                     </form>
                 </th>
-    
                 </tr>
             </tbody>
         {% endfor %}
