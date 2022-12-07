@@ -12,8 +12,20 @@
   <title>Home</title>
 </head>
 <body>
-    <div class="container">
+  <!--
+    <form class="formulary" action="{% url 'search' %}" method="POST">
+        {% csrf_token %}
+
+        <div class="form-row">
+            <label for="" class="label-user">Pesquisar:</label>
+            <input type="text" name="search" id="search">
+        </div>
+    </form>
+    -->
+
+    <div class="container mt-5">
       <div class="d-flex align-items-center justify-content-between bd-highlight mb-3">
+        <!-- MODAL -->
         <div class="p-2 bd-highlight">
           <!-- Button trigger modal -->
             <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#exampleModal">
@@ -30,11 +42,10 @@
                 </div>
                 <div class="modal-body">
                     <!-- Campo para adicionar um novo usuário -->
-    
-                    <form action="{% url 'salvar' %}" method="POST">
-                            {% csrf_token %}
-                            <input class="input" type="text" name="name">
-                            <button class="btn btn-success" type="submit">Salvar</button>
+                    <form class="input-group w-100" action="{% url 'salvar' %}" method="POST">
+                      {% csrf_token %}
+                      <input type="text" class="form-control" placeholder="Username" name="name">
+                      <button class="btn btn-outline-success" type="submit" id="button-addon2">Adicionar</button>
                     </form>
                 </div>
                 <div class="modal-footer">
@@ -44,6 +55,7 @@
             </div>
             </div>
         </div>
+        <!-- SEARCH -->
         <form class="input-group w-50" action="{% url 'search' %}" method="POST">
           {% csrf_token %}
           <input type="text" class="form-control" placeholder="Username" aria-label="Username" name="search" id="search" aria-describedby="button-addon2">
@@ -55,9 +67,10 @@
         <table class="table">
           <thead>
             <tr>
-              <th scope="col">Id</th>
+              <th scope="col">#</th>
               <th scope="col">Avatar</th>
-              <th scope="col">E-mail</th>
+              <th scope="col">First</th>
+              <th scope="col">Last</th>
               <th scope="col">Username</th>
               <th scope="col">Action</th>
             </tr>
@@ -66,9 +79,9 @@
             <tbody id="mytable">
                 <tr>
                 <th scope="col" colspan="1">{{ user.id }}</th>
-                <th scope="col" colspan="1"><img src="https://avatars.githubusercontent.com/{{user.user}}" alt="Image github profile of {{user.user}}" height="36"></th>
-               <!-- Teste p/ pegar nome e sobrenome do GitHub por API -->
-                <th scope="col" colspan="1">-</th>
+                <th scope="col" colspan="1"><img src="https://avatars.githubusercontent.com/{{user.user}}" alt="Image github profile of {{user.user}}" style="border-radius: 50%;" height="36"></th>
+                <th scope="col" colspan="1">{{ user.first_name }}</th>
+                <th scope="col" colspan="1">{{ user.last_name }}</th>
                 <th scope="col" colspan="1">{{ user.user }}</th>
                 <th scope="col" colspan="1" >
                     <button class="btn btn-primary px-2" type="submit" name="id" value="{{ user.id }}" >EDIT</button>
@@ -77,6 +90,7 @@
                         <button class="btn btn-danger ml-1" type="submit" name="id" value="{{ user.id }}" >DEL</button>
                     </form>
                 </th>
+    
                 </tr>
             </tbody>
         {% endfor %}
@@ -84,13 +98,7 @@
         </table>
       </div>
     </div>
-
-    <!-- Criar API e retornar o nome e sobrenome -->
-    <script>
-      function get_name(user){
-        let url = "https://api.github.com/users/${user}"
-      }
-    </script>
+    
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.16/dist/sweetalert2.all.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous"></script>
     
