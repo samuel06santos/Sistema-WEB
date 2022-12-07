@@ -10,4 +10,4 @@ urlpatterns = [
     path('registrar/', registrar, name="registrar"),
     path('deletar/<int:id>', deletar, name='deletar'),
     path('search/', search, name='search'), #<str:search>
-    
+]
