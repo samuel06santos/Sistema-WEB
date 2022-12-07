@@ -1,15 +1,19 @@
 from django.shortcuts import render, redirect
 from .models import Usuario
+from django.db.models import Q
+import requests
 
 def home(request):
     # search = request.POST.get("search")
     # users = Usuario.objects.filter(user=search)
+
     users = Usuario.objects.all()
     return render(request, "home.html", {"usuarios": users})
 
-def search(request, ):
+def search(request):
     search = request.POST.get("search")
-    users = Usuario.objects.filter(user=search)
+    print(search)
+    users = Usuario.objects.filter(Q(user__startswith=search))
     return render(request, "home.html", {"usuarios": users})
 
 def entrar(request):
@@ -26,8 +30,12 @@ def registrar(request):
     return render(request, "register.html")
 
 def salvar(request):
-    name = request.POST.get("name")
-    Usuario.objects.create(user=name)
+    user = request.POST.get("name")
+    dict_info = requests.get(f"https://api.github.com/users/{user}").json()
+
+    names = dict_info["name"].split() if dict_info["name"] is not None else ['','']
+    print(names)
+    Usuario.objects.create(user=user, first_name=names[0], last_name=names[1])
     return redirect(home)
 
 def deletar(request, id):
