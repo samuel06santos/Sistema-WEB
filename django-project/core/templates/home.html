@@ -2,14 +2,14 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
-    
-    <!-- <script src="{% static 'js/javascript.js' %}"></script> -->
-    <title>Home</title>
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
+
+  <!-- <script src="{% static 'js/javascript.js' %}"></script> -->
+  <title>Home</title>
 </head>
 <body>
     <form class="formulary" action="{% url 'search' %}" method="POST">
@@ -78,7 +78,8 @@
             <tbody id="mytable">
                 <tr>
                 <th scope="col" colspan="1">{{ user.id }}</th>
-                <th scope="col" colspan="1">-</th>
+                <th scope="col" colspan="1"><img src="https://avatars.githubusercontent.com/{{user.user}}" alt="Image github profile of {{user.user}}" height="36"></th>
+               <!-- Teste p/ pegar nome e sobrenome do GitHub por API -->
                 <th scope="col" colspan="1">-</th>
                 <th scope="col" colspan="1">-</th>
                 <th scope="col" colspan="1">{{ user.user }}</th>
@@ -99,6 +100,12 @@
       </div>
     </div>
 
+    <!-- Criar API e retornar o nome e sobrenome -->
+    <script>
+      function get_name(user){
+        let url = "https://api.github.com/users/${user}"
+      }
+    </script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.16/dist/sweetalert2.all.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous"></script>
     

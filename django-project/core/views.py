@@ -2,11 +2,12 @@ from django.shortcuts import render, redirect
 from .models import Usuario
 
 def home(request):
-    search = request.POST.get("search")
-    users = Usuario.objects.filter(user=search)
+    # search = request.POST.get("search")
+    # users = Usuario.objects.filter(user=search)
+    users = Usuario.objects.all()
     return render(request, "home.html", {"usuarios": users})
 
-def search(request):
+def search(request, ):
     search = request.POST.get("search")
     users = Usuario.objects.filter(user=search)
     return render(request, "home.html", {"usuarios": users})
@@ -34,11 +35,11 @@ def deletar(request, id):
     user.delete()
     return redirect(home)
 
-# EM CONSTRUÇÃO
-
 # def edit(request, id):
-#     user = Usuario.objects.get(id=id)
+#     user = Usuario.objects.get(name=search)
 #     return render(request, "edit.html", {"usuario": user})
+
+# EM CONSTRUÇÃO
 
 # def update(request, id):
 #     new_name = request.POST.get("name")
