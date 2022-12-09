@@ -23,3 +23,14 @@ python manage.py migrate
 
     Roda o localhost
 python manage.py runserver
+
+
+    Inicia o Shell do django
+python manage.py shell
+import os
+import django
+django.setup()
+from core.models import Usuario
+
+    Deletar database
+<Usuario>.objects.all().delete()
