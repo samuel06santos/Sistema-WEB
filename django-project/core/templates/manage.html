@@ -49,7 +49,7 @@
         <form class="input-group w-50" action="{% url 'search' %}" method="POST">
           {% csrf_token %}
           <input type="text" class="form-control" placeholder="Name ou Username" aria-label="Username" name="search" id="search" aria-describedby="button-addon2" autocomplete="off" spellcheck="false">
-          <button class="btn btn-outline-secondary" type="button" id="button-addon2">Pesquisar</button>
+          <button class="btn btn-outline-secondary" type="submit" id="button-addon2">Pesquisar</button>
         </form>
       </div>
       
