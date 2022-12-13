@@ -15,8 +15,8 @@
     <div id="carouselExampleCaptions" class="carousel slide container d-flex flex-column mt-5 rounded-3 border p-0" data-bs-ride="carousel">
         <!-- Botões de controle -->
         <div class="btn-group d-flex" role="group" aria-label="Basic example">
-            <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="0" class="btn btn-outline-primary active" aria-current="true" aria-label="Slide 1">Login</button>
-            <button type="button" data-bs-target="#carouselExampleCaptions" class="btn btn-outline-primary" data-bs-slide-to="1" aria-label="Slide 2">Registro</button>
+            <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="0" class="pageNavigation btn btn-outline-primary active" aria-current="true" aria-label="Slide 1">Login</button>
+            <button type="button" data-bs-target="#carouselExampleCaptions" class="pageNavigation btn btn-outline-primary" data-bs-slide-to="1" aria-label="Slide 2">Registro</button>
         </div>
         
         
@@ -71,16 +71,18 @@
 
                         <!-- Password input -->
                         <div class="form-outline mb-4">
-                            <input type="password" name="password" id="registerPassword" class="form-control" spellcheck="false" required/>
-                            <label class="form-label" for="registerPassword">Senha</label>
+                            <input oninput="verifyPassword()" type="password" name="password" id="psw1" class="form-control" spellcheck="false" required/>
+                            <label class="form-label" for="psw1">Senha</label>
                         </div>
 
                         <!-- Repeat Password input -->
                         <div class="form-outline mb-4">
-                            <input type="password" id="registerRepeatPassword" class="form-control" spellcheck="false" required/>
-                            <label class="form-label" for="registerRepeatPassword">Confirmar senha</label>
+                            <input oninput="verifyPassword()" type="password" id="psw2" class="form-control" spellcheck="false" required/>
+                            <label class="form-label" for="psw2">Confirmar senha</label>
                         </div>
-
+                        <div class="alert alert-danger d-none" role="alert">
+                            As senhas precisam ser iguais!
+                        </div>
                         <!-- Checkbox -->
                         <div class="form-check d-flex justify-content-center mb-4">
                             <input class="form-check-input me-2" type="checkbox" value="" id="registerCheck" checked
@@ -91,29 +93,33 @@
                         </div>
 
                         <!-- Submit button -->
-                        <button type="submit" class="btn btn-primary btn-block mb-3 d-block m-auto">Registrar-se</button>
+                        <button type="submit" id="btn-submit" class="btn btn-primary btn-block mb-3 d-block m-auto">Registrar-se</button>
                     </form>
                 </div>
             </div>
         </div>
     </div>
     <script>
+        //Page Navigation 
+        document.querySelectorAll(".pageNavigation").forEach(function(button) {
+            button.addEventListener("click", function(event) {
+                document.querySelectorAll(".pageNavigation").forEach((el) => el.classList.remove("active"))
+                const el = event.target || event.srcElement
+                el.classList.add("active")
+            });
+        });
 
-        function Verify_psswd(){
-            var psswd = document.getElementById("password").value;
-            var c_psswd = document.getElementById("confirm-password").value;
-            let btn = document.querySelector("#btn-submit")
-            var alerta = document.getElementById("alerta");
-            if (psswd != c_psswd) {
-                btn.disabled = true
-                alerta.innerHTML = "Por favor insira uma senha!";
-            
+        //2-steps verification
+        function verifyPassword(){
+            let psw1 = document.querySelector("#psw1").value
+            let psw2 = document.querySelector("#psw2").value
+            if (psw1 != psw2){
+                document.querySelector('.alert').classList.remove("d-none")
+                document.querySelector('#btn-submit').disabled=true
+            }else{
+                document.querySelector('.alert').classList.add("d-none")
+                document.querySelector('#btn-submit').disabled=false
             }
-            else {
-                btn.disabled = false
-                alerta.innerHTML = "Por favor insira uma senha!";
-            }
-            return false;
         }
     </script>
 </body>
