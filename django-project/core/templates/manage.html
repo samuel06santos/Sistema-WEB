@@ -68,7 +68,7 @@
         {% for user in usuarios %}
             <tbody id="mytable">
               <tr>
-                <th scope="col" colspan="1">{{ user.id }}</th>
+                <th scope="col" colspan="1">{{ forloop.counter }}</th>
                 <th scope="col" colspan="1"><img src="https://avatars.githubusercontent.com/{{user.usuario}}" style="border-radius: 50%;" height="36"></th>
                 <th scope="col" colspan="1">{{ user.nome }}</th>
                 <th scope="col" colspan="1">{{ user.usuario }}</th>
@@ -111,7 +111,7 @@
 
                               <div class="form-group">
                                 <label class="form-label" for="nome">Senha</label>
-                                <input type="password" class="form-control" value="{{ user.senha}}" name="senha" autocomplete="off" spellcheck="false">
+                                <input type="password" class="form-control" id="password" value="{{ user.senha}}" name="senha" autocomplete="off" spellcheck="false">
                               </div>
 
                               <button class="btn btn-outline-success mt-2" type="submit" id="button-addon2" name="id" value="{{ user.id }}">Salvar</button>
@@ -139,6 +139,7 @@
     
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.16/dist/sweetalert2.all.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css" />
     
 </body>
 </html>

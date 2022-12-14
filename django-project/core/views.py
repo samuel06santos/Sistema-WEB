@@ -34,6 +34,10 @@ def salvar(request):
     return redirect(manager)
 
 
+def searchUser(text_value):
+    return Usuario.objects.filter(Q(email=text_value) | Q(usuario=text_value))
+
+
 def registrar(request):
     """Cadastra um novo usuário no banco de dados com 'nome', 'usuario', 'email' e 'senha' preenchidos.
     E faz a verificação se o mesmo usuário ou e-mail já existem no banco.
@@ -44,13 +48,22 @@ def registrar(request):
     email = request.POST.get("email")
     password = request.POST.get("password")
 
-    # Fazer a verificação da existencia no banco
-
-    print(f"USUARIO CRIADO:\n{name=}\n{email=}\n{password=}\n{username=}\n")
+    
+    def searchUser_Email(value_text, column):
+        """Faz uma busca no banco de dados com a string passada no 'value_text'.\n
+        Se 'column' for igual a 'usuario' realiza a busca na coluna do usuario,
+        e caso seja 'email' busca na coluna do email no banco de dados.
+        value_text (str): string a ser buscada
+        column (str): 'usuario' | 'email'
+        """
+        return Usuario.objects.filter([Q(email=value_text), Q(usuario=value_text),][1 if column=="usuario" else 0 if column=="email" else 3])
+    
     Usuario.objects.create(nome=name, usuario=username, email=email, senha=password)
-
-    return render(request, "entry.html")
-
+    print(f"USUARIO CRIADO:\n{name=}\n{email=}\n{password=}\n{username=}\n")
+    print("##Retorna pro login")
+    users = Usuario.objects.all()
+    return render(request, "entry.html", {"users": users})
+    
 
 def entrar(request):
     """"""
@@ -61,7 +74,6 @@ def entrar(request):
     # REMOVER A DUPLICATA DE USUARIOS
 
     bool_, mensagem = False, ""
-    searchUser = lambda text_value: Usuario.objects.filter(Q(email=text_value) | Q(usuario=text_value))
 
 
     if searchUser(user_email).exists():
@@ -70,9 +82,10 @@ def entrar(request):
 
         else: bool_, mensagem = True, "Senha incorreta!"
     elif None in [user_email, password]: bool_= False
-    else: bool_, mensagem = True, "E-mail ou usuário não existem!"
+    else: bool_, mensagem = True, "E-mail ou usuário não existe!"
 
-    return render(request, "entry.html", {"bool": bool_, "mensagem": mensagem})
+    users = Usuario.objects.all()
+    return render(request, "entry.html", {"bool": bool_,"d-none":"", "mensagem": mensagem, "users": users})
     
 
 def editar(request, id):
@@ -90,3 +103,7 @@ def editar(request, id):
         senha=password
     )
     return redirect(manager)
+
+def sla(request):
+    # return HttpResponse("home.html", {})
+    return render(request, "home.html", {"active": ["nao ativo", "ativo"]})

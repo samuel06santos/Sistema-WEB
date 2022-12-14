@@ -4,7 +4,7 @@ COMMANDS FOR **WINDOWS:
 python -m venv venv
     
     Acessa o diretório do venv criado, ativa e sai do diretório
-cd venv/Scripts
+cd django-project/venv/Scripts
 activate
 cd ../..
     

@@ -16,7 +16,7 @@
         <!-- Botões de controle -->
         <div class="btn-group d-flex" role="group" aria-label="Basic example">
             <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="0" class="pageNavigation btn btn-outline-primary active" aria-current="true" aria-label="Slide 1">Login</button>
-            <button type="button" data-bs-target="#carouselExampleCaptions" class="pageNavigation btn btn-outline-primary" data-bs-slide-to="1" aria-label="Slide 2">Registro</button>
+            <button type="button" data-bs-target="#carouselExampleCaptions" class="pageNavigation btn btn-outline-primary" data-bs-slide-to="1" aria-label="Slide 2" href="./registrar/">Registro</button>
         </div>
         
         
@@ -38,8 +38,10 @@
                                 <label class="form-label" for="loginPassword">Senha</label>
                                 <input type="password" name="password" id="loginPassword" class="form-control" required/>
                             </div>
-                            {% if bool == True%}
-                                <label class="form-label" style="color:#ff2828">{{mensagem}}</label>
+                            {% if bool == True %}
+                                <div class="alert alert-danger" id="alert_login" role="alert">
+                                    {{mensagem}}
+                                </div>
                             {% endif %}
                             <!-- Submit button -->
                             <button type="submit" class="btn btn-primary btn-block mb-4 d-block m-auto">Entrar</button>
@@ -48,6 +50,7 @@
                 </div>
             </div>
             <div class="carousel-item" data-bs-interval="9999999999">
+                <!-- PÁGINA DE CADASTRO -->
                 <div class="p-5">
                     <form class="formulary" action="{% url 'registrar' %}" method="POST">
     	                {% csrf_token %}
@@ -59,14 +62,20 @@
 
                         <!-- Username input -->
                         <div class="form-outline mb-4">
-                            <input type="text" name="username" id="registerUsername" class="form-control" spellcheck="false" required/>
+                            <input type="text" onchange="checkUsername()" name="username" id="registerUsername" class="form-control" spellcheck="false" required/>
                             <label class="form-label" for="registerUsername">Usuário</label>
+                            <div class="alert alert-danger d-none" id="alert_user" role="alert">
+                                O usuário informado já existe, por favor digite outro.
+                            </div>
                         </div>
 
                         <!-- Email input -->
                         <div class="form-outline mb-4">
-                            <input type="email" name="email" id="registerEmail" class="form-control" spellcheck="false" required/>
+                            <input type="email" onchange="checkEmail()" name="email" id="registerEmail" class="form-control" spellcheck="false" required/>
                             <label class="form-label" for="registerEmail">Email</label>
+                            <div class="alert alert-danger d-none" id="alert_email" role="alert">
+                                O email informado já existe, por favor verifique o email digitado.
+                            </div>
                         </div>
 
                         <!-- Password input -->
@@ -80,9 +89,10 @@
                             <input oninput="verifyPassword()" type="password" id="psw2" class="form-control" spellcheck="false" required/>
                             <label class="form-label" for="psw2">Confirmar senha</label>
                         </div>
-                        <div class="alert alert-danger d-none" role="alert">
+                        <div class="alert alert-danger d-none" id="alert_pswd" role="alert">
                             As senhas precisam ser iguais!
                         </div>
+                        
                         <!-- Checkbox -->
                         <div class="form-check d-flex justify-content-center mb-4">
                             <input class="form-check-input me-2" type="checkbox" value="" id="registerCheck" checked
@@ -109,15 +119,65 @@
             });
         });
 
+
+        //Check if User exists
+        function checkUsername(){
+            let valor = document.getElementById("registerUsername").value
+            let users = []
+            //Cria uma Array de usuarios que estão no banco
+            "{% for user in users %}"
+                users.push("{{ user.usuario }}")
+            "{% endfor %}"
+            if (users.indexOf(valor) !== -1){
+                document.getElementById("alert_user").classList.remove('d-none')
+                document.getElementById('btn-submit').disabled=true
+            }
+            // else if (){////////////////////////////////////////////////////
+            //
+            // }
+            else{
+                document.getElementById("alert_user").classList.add('d-none')
+                document.getElementById('btn-submit').disabled=false
+            }    
+        }
+        //Check if Email exists
+        function checkEmail(){
+            let valor = document.getElementById("registerEmail").value
+            let alert_user = document.getElementById("alert_user").classList.value
+            let alert_email = document.getElementById("alert_pswd").classList.value
+            let emails = []
+            //Cria uma Array de emails que estão no banco
+            "{% for user in users %}"
+                emails.push('{{ user.email }}')
+            "{% endfor %}"
+            // Se o email existir
+            if (emails.indexOf(valor) !== -1){
+                document.getElementById("alert_email").classList.remove('d-none')
+                document.getElementById('btn-submit').disabled=true
+            // }
+            //Se o alert do username ou do email não estiverem ativos
+            // else if (! alert_user.includes("d-none") && ! alert_pswd.includes("d-none")){////////////////////////////////////////////////////
+            //     document.querySelector('#alert_email').classList.add("d-none")
+            //     document.querySelector('#btn-submit').disabled=true
+            }else{
+                document.getElementById("alert_email").classList.add('d-none')
+                document.getElementById('btn-submit').disabled=false
+            }    
+        }
+
+
         //2-steps verification
         function verifyPassword(){
             let psw1 = document.querySelector("#psw1").value
             let psw2 = document.querySelector("#psw2").value
             if (psw1 != psw2){
-                document.querySelector('.alert').classList.remove("d-none")
+                document.querySelector('#alert_pswd').classList.remove("d-none")
                 document.querySelector('#btn-submit').disabled=true
+            }else if (! document.getElementById("alert_email").classList.value.includes("d-none")){
+                document.querySelector('#btn-submit').disabled=true
+                document.querySelector('#alert_pswd').classList.add("d-none")
             }else{
-                document.querySelector('.alert').classList.add("d-none")
+                document.querySelector('#alert_pswd').classList.add("d-none")
                 document.querySelector('#btn-submit').disabled=false
             }
         }
