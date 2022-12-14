@@ -5,7 +5,8 @@ import requests
 # import sqlite3
 # import pandas as pd
 
-
+def home(request):
+    return render(request, "home.html", {})
 
 def manager(request):
     """Retorna todos as informações dos usuários cadastrados no banco de dados.
@@ -75,13 +76,19 @@ def entrar(request):
 
     user_email = request.POST.get("user_email")
     password = request.POST.get("password")
+    
+    
     bool_, mensagem = False, ""
 
     # Se o usuario existir no Banco de Dados
     if searchUser_Email(user_email, "usuario").exists():
         # Compara a senha do usuario no banco com a senha passada no input
         if searchUser_Email(user_email, "usuario")[0].senha == password:
-            return redirect(manager)
+            if searchUser_Email(user_email, "usuario")[0].admin == None:
+                # Retorna pro HTML manage.html como administrador
+                return redirect(manager)
+            else:
+                return redirect(home)
         else: bool_, mensagem = True, "Senha incorreta!"
 
     elif None in [user_email, password]: bool_= False
@@ -99,17 +106,19 @@ def editar(request, id):
     username = request.POST.get("username")
     email = request.POST.get("email")
     password = request.POST.get("senha")
+    isAdmin = request.POST.get("isAdmin")
+    print('TBETYHN = ', isAdmin)
 
     user = Usuario.objects.filter(id=id).update(
         nome=name,
         usuario=username,
         email=email,
-        senha=password
-    )
+        senha=password,
+        admin=isAdmin
+        )
     return redirect(manager)
 
-def logout(request):
-    return render(request, "home.html", {})
+
 
 
     

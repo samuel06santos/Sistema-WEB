@@ -116,6 +116,14 @@
                                 <input type="password" class="form-control" id="password" value="{{ user.senha}}" name="senha" autocomplete="off" spellcheck="false">
                               </div>
 
+                              <div class="form-check d-flex justify-content-center mb-4">
+                                <input class="form-check-input me-2" type="checkbox" value="" id="registerCheck" name="isAdmin"
+                                aria-describedby="registerCheckHelpText"/>
+                                <label class="form-check-label" for="registerCheck">
+                                  Dar permissão de administrador.
+                                </label>
+                            </div>
+
                               <button class="btn btn-outline-success mt-2" type="submit" id="button-addon2" name="id" value="{{ user.id }}">Salvar</button>
                             </form>
                         </div>
