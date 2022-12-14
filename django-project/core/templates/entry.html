@@ -55,7 +55,7 @@
                 
                 <!-- PÁGINA DE CADASTRO -->
                 <div class="p-5">
-                    <form class="formulary" action="{% url 'registrar' %}" method="POST">
+                    <form class="formulary" id="formReg" action="{% url 'registrar' %}" method="POST">
     	                {% csrf_token %}
 
                         <!-- Name input -->
@@ -131,22 +131,17 @@
             "{% for user in users %}"
                 users.push("{{ user.usuario }}")
             "{% endfor %}"
+            console.log(users)
             if (users.indexOf(valor) !== -1){
                 document.getElementById("alert_user").classList.remove('d-none')
-                document.getElementById('btn-submit').disabled=true
             }
-            // else if (){////////////////////////////////////////////////////
-            //
-            // }
             else{
                 document.getElementById("alert_user").classList.add('d-none')
-                document.getElementById('btn-submit').disabled=false
             }    
         }
         //Check if Email exists
         function checkEmail(){
             let valor = document.getElementById("registerEmail").value
-            let alert_user = document.getElementById("alert_user").classList.value
             let alert_email = document.getElementById("alert_pswd").classList.value
             let emails = []
             //Cria uma Array de emails que estão no banco
@@ -156,18 +151,10 @@
             // Se o email existir
             if (emails.indexOf(valor) !== -1){
                 document.getElementById("alert_email").classList.remove('d-none')
-                document.getElementById('btn-submit').disabled=true
-            // }
-            //Se o alert do username ou do email não estiverem ativos
-            // else if (! alert_user.includes("d-none") && ! alert_pswd.includes("d-none")){////////////////////////////////////////////////////
-            //     document.querySelector('#alert_email').classList.add("d-none")
-            //     document.querySelector('#btn-submit').disabled=true
             }else{
                 document.getElementById("alert_email").classList.add('d-none')
-                document.getElementById('btn-submit').disabled=false
             }    
         }
-
 
         //2-steps verification
         function verifyPassword(){
@@ -175,15 +162,18 @@
             let psw2 = document.querySelector("#psw2").value
             if (psw1 != psw2){
                 document.querySelector('#alert_pswd').classList.remove("d-none")
-                document.querySelector('#btn-submit').disabled=true
-            }else if (! document.getElementById("alert_email").classList.value.includes("d-none")){
-                document.querySelector('#btn-submit').disabled=true
-                document.querySelector('#alert_pswd').classList.add("d-none")
             }else{
                 document.querySelector('#alert_pswd').classList.add("d-none")
-                document.querySelector('#btn-submit').disabled=false
             }
         }
+
+        //Verify all inputs
+        document.querySelector('#btn-submit').addEventListener("click",(e)=>{
+            e.preventDefault()
+            if(document.querySelector('#alert_pswd').classList.contains("d-none") && document.querySelector('#alert_email').classList.contains("d-none") && document.querySelector('#alert_user').classList.contains("d-none")){
+                document.querySelector('#formReg').submit()
+            }
+        })
     </script>
 </body>
 </html>
