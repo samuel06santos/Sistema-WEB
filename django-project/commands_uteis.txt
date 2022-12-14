@@ -10,6 +10,7 @@ cd ../..
     
     Instala o django caso não esteja instalado
 pip install django
+pip install pandas
 
     Cria o projeto chamado 'app' sem subdiretorio
 django-admin startproject app .

@@ -32,8 +32,6 @@
                     <form class="input-group w-100" action="{% url 'salvar' %}" method="POST">
                       {% csrf_token %}
 
-<!-- Criar aviso p/ o usuario sobre a quantidade de caracteres permitidos e quais sao -->
-
                       <input type="text" pattern="^(?=.{4,20})[A-Za-z0-9._@!-]+" class="form-control" placeholder="Username" name="name" autocomplete="off" spellcheck="false" required>
                       <button class="btn btn-outline-success" type="submit" id="button-addon2">Adicionar</button>
                     </form>
@@ -45,6 +43,10 @@
             </div>
             </div>
         </div>
+        <!-- Donwload -->
+        <!-- <div>
+          <a href="path" download="filename">Download link</a>
+        </div> -->
         <!-- Search -->
         <form class="input-group w-50" action="{% url 'search' %}" method="POST">
           {% csrf_token %}

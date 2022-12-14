@@ -27,22 +27,24 @@
                     <div class="tab-pane fade show" id="pills-login" role="tabpanel" aria-labelledby="tab-login">
                         <form action="{% url 'login' %}" method="POST">
                             {% csrf_token %}
+
                             <!-- Email input -->
                             <div class="form-outline mb-4">
-                                <label class="form-label" for="loginName">Email ou username</label>
                                 <input type="text" pattern="^(?=.{2,20})[A-Za-z0-9._@!-]+" name="user_email" id="loginName" class="form-control" required/>
+                                <label class="form-label" for="loginName">Email ou username</label>
                             </div>
 
                             <!-- Password input -->
                             <div class="form-outline mb-4">
-                                <label class="form-label" for="loginPassword">Senha</label>
                                 <input type="password" name="password" id="loginPassword" class="form-control" required/>
+                                <label class="form-label" for="loginPassword">Senha</label>
                             </div>
                             {% if bool == True %}
                                 <div class="alert alert-danger" id="alert_login" role="alert">
                                     {{mensagem}}
                                 </div>
                             {% endif %}
+
                             <!-- Submit button -->
                             <button type="submit" class="btn btn-primary btn-block mb-4 d-block m-auto">Entrar</button>
                         </form>
@@ -50,10 +52,12 @@
                 </div>
             </div>
             <div class="carousel-item" data-bs-interval="9999999999">
+                
                 <!-- PÁGINA DE CADASTRO -->
                 <div class="p-5">
                     <form class="formulary" action="{% url 'registrar' %}" method="POST">
     	                {% csrf_token %}
+
                         <!-- Name input -->
                         <div class="form-outline mb-4">
                             <input type="text" name="name" id="registerName" class="form-control" spellcheck="false" required/>
@@ -118,7 +122,6 @@
                 el.classList.add("active")
             });
         });
-
 
         //Check if User exists
         function checkUsername(){
